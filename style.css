@@ -77,6 +77,64 @@ input[type=checkbox] {
   margin: 0 15px;
   text-align: center;
 }
+/* TOGGLES CARD SPECIAL STYLE */
+.card.toggles {
+  border: 2px solid #9c27b0;
+  box-shadow: 0 0 15px rgba(156, 39, 176, 0.5);
+}
+
+/* Toggle rows */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.3);
+}
+
+/* Custom switch style */
+.toggle-row input[type=checkbox] {
+  appearance: none;
+  width: 50px;
+  height: 25px;
+  background: #555;
+  border-radius: 15px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s;
+}
+
+/* Toggle ON state */
+.toggle-row input[type=checkbox]:checked {
+  background: #4caf50;
+  box-shadow: 0 0 8px #4caf50;
+}
+
+/* Toggle slider */
+.toggle-row input[type=checkbox]::after {
+  content: '';
+  width: 23px;
+  height: 23px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  transition: 0.3s;
+}
+
+/* Move slider when ON */
+.toggle-row input[type=checkbox]:checked::after {
+  left: 26px;
+}
+
+/* Toggle label text */
+.toggle-row span {
+  font-size: 16px;
+}
 
 /* Ultimate overlay */
 #ultOverlay {
