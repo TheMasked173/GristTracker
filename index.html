@@ -30,7 +30,11 @@
   <button class="sub" onclick="removeGravePrompt()">- Remove Custom</button>
   <button class="reset" onclick="exileGrave()">Exile Graveyard</button>
 </div>
-
+<!-- TOTAL BUGS -->
+<div class="card">
+  <h2>Total Bugs</h2>
+  <div class="count" id="totalBugs">0</div>
+</div>
 <!-- INSECTS -->
 <div class="card">
   <h2>Insect Zones</h2>
@@ -83,5 +87,26 @@
 
 <!-- Link to JS -->
 <script src="app.js"></script>
+  <script>
+  // Update total bugs dynamically
+  function updateTotalBugs() {
+    const ready = parseInt(document.getElementById('ready').innerText) || 0;
+    const sick = parseInt(document.getElementById('sick').innerText) || 0;
+    const tapped = parseInt(document.getElementById('tapped').innerText) || 0;
+    document.getElementById('totalBugs').innerHTML = ready + sick + tapped;
+  }
+
+  // Observe changes on the zone divs
+  const zoneIds = ['ready', 'sick', 'tapped'];
+  zoneIds.forEach(id => {
+    const el = document.getElementById(id);
+    // Every time the innerText changes, update Total Bugs
+    const observer = new MutationObserver(updateTotalBugs);
+    observer.observe(el, { childList: true, characterData: true, subtree: true });
+  });
+
+  // Initialize on page load
+  updateTotalBugs();
+</script>
 </body>
 </html>
