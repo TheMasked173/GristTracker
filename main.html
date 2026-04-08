@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grist Tracker</title>
+<link rel="stylesheet" href="style.css"> <!-- Link to CSS -->
+</head>
+<body>
+
+<h1>Grist Tracker</h1>
+
+<!-- GRIST LOYALTY -->
+<div class="card">
+  <h2>Grist Loyalty</h2>
+  <div class="count" id="loyalty">3</div>
+  <button class="add" onclick="gristPlus()">+1 Bulk</button>
+  <button class="sub" onclick="change('loyalty', -2)">-2</button>
+  <button class="alt" onclick="gristUlt()">-5 Ultimate</button>
+  <button class="reset" onclick="resetGrist()">Reset to 3</button>
+  <button class="reset" onclick="newGame()">New Game</button>
+</div>
+
+<!-- GRAVEYARD -->
+<div class="card">
+  <h2>Creatures in Graveyard</h2>
+  <div class="count" id="grave">0</div>
+  <button class="add" onclick="addGrave()">+ Add Creature</button>
+  <button class="add" onclick="addGravePrompt()">+ Add Custom</button>
+  <button class="sub" onclick="removeGrave()">- Remove Creature</button>
+  <button class="sub" onclick="removeGravePrompt()">- Remove Custom</button>
+  <button class="reset" onclick="exileGrave()">Exile Graveyard</button>
+</div>
+
+<!-- INSECTS -->
+<div class="card">
+  <h2>Insect Zones</h2>
+
+  <!-- Ready -->
+  <div class="zone-row">
+    <button class="sub" onclick="change('ready', -1)">-</button>
+    <div>
+      <div class="small">Ready</div>
+      <div class="count" id="ready">0</div>
+    </div>
+    <button class="add" onclick="change('ready', 1)">+</button>
+  </div>
+
+  <!-- Sick -->
+  <div class="zone-row">
+    <button class="sub" onclick="change('sick', -1)">-</button>
+    <div>
+      <div class="small">Summoning Sick</div>
+      <div class="count" id="sick">0</div>
+    </div>
+    <button class="add" onclick="change('sick', 1)">+</button>
+  </div>
+
+  <!-- Tapped -->
+  <div class="zone-row">
+    <button class="sub" onclick="change('tapped', -1)">-</button>
+    <div>
+      <div class="small">Tapped</div>
+      <div class="count" id="tapped">0</div>
+    </div>
+    <button class="add" onclick="change('tapped', 1)">+</button>
+  </div>
+
+  <br>
+  <button class="alt" onclick="tapReady()">Tap Ready</button>
+  <button class="alt" onclick="untapOne()">Untap One</button>
+  <br><br>
+  <button class="alt" onclick="nextTurn()">Next Turn</button>
+  <br><br>
+  <button class="sub" onclick="boardWipe()">Board Wipe</button>
+  <br><br>
+  <label>
+    <input type="checkbox" id="enterTapped"> Creatures enter tapped
+  </label>
+</div>
+
+<!-- Ultimate overlay -->
+<div id="ultOverlay"></div>
+
+<!-- Link to JS -->
+<script src="app.js"></script>
+</body>
+</html>
