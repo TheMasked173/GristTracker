@@ -31,10 +31,18 @@ function gristPlus(){
   const staticWipe = document.getElementById('staticWipe').checked;
   const staticExile = document.getElementById('staticExile').checked;
 
-  // Animate the bulk increment step by step
   let count = 0;
   const interval = setInterval(()=>{
-    if(count >= n){ clearInterval(interval); return; }
+    if(count >= n){ 
+      clearInterval(interval);
+
+      // Apply grave change once at the end
+      if(!staticExile && n > 1){
+        change('grave', n-1);
+      }
+
+      return; 
+    }
     count++;
 
     if(!staticWipe){
@@ -44,11 +52,9 @@ function gristPlus(){
     }
 
     change('loyalty', 1);
-    if(!staticExile) change('grave', 1);
 
-  }, 200); // 200ms between each increment
+  }, 200); // 200ms per increment
 }
-
 function customGristSub(){
   let n=parseInt(prompt("Reduce by how much?"));
   if(isNaN(n)||n<1) return;
