@@ -20,7 +20,11 @@ function gristPlus(){
   change('loyalty', n);
   change('grave', n-1);
 }
-
+function customGristSub() {
+  let n = parseInt(prompt("Reduce Grist Loyalty by how much?"));
+  if (isNaN(n) || n < 1) return; // ignore invalid input
+  change('loyalty', -n);
+}
 function gristUlt(){
   if(get('loyalty') < 5){alert("Not enough loyalty!"); return;}
   change('loyalty', -5);
