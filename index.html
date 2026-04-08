@@ -3,13 +3,13 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grist Tracker</title>
-<link rel="stylesheet" href="style.css"> <!-- Link to CSS -->
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h1>Grist Tracker</h1>
 
-<!-- GRIST LOYALTY -->
+<!-- GRIST -->
 <div class="card">
   <h2>Grist Loyalty</h2>
   <div class="count" id="loyalty">3</div>
@@ -21,7 +21,7 @@
   <button class="reset" onclick="newGame()">New Game</button>
 </div>
 
-<!-- GRAVEYARD -->
+<!-- GRAVE -->
 <div class="card">
   <h2>Creatures in Graveyard</h2>
   <div class="count" id="grave">0</div>
@@ -31,42 +31,32 @@
   <button class="sub" onclick="removeGravePrompt()">- Remove Custom</button>
   <button class="reset" onclick="exileGrave()">Exile Graveyard</button>
 </div>
+
 <!-- TOTAL BUGS -->
 <div class="card">
   <h2>Total Bugs</h2>
   <div class="count" id="totalBugs">0</div>
 </div>
+
 <!-- INSECTS -->
 <div class="card">
   <h2>Insect Zones</h2>
 
-  <!-- Ready -->
   <div class="zone-row">
     <button class="sub" onclick="change('ready', -1)">-</button>
-    <div>
-      <div class="small">Ready</div>
-      <div class="count" id="ready">0</div>
-    </div>
+    <div><div class="small">Ready</div><div class="count" id="ready">0</div></div>
     <button class="add" onclick="change('ready', 1)">+</button>
   </div>
 
-  <!-- Sick -->
   <div class="zone-row">
     <button class="sub" onclick="change('sick', -1)">-</button>
-    <div>
-      <div class="small">Summoning Sick</div>
-      <div class="count" id="sick">0</div>
-    </div>
+    <div><div class="small">Summoning Sick</div><div class="count" id="sick">0</div></div>
     <button class="add" onclick="change('sick', 1)">+</button>
   </div>
 
-  <!-- Tapped -->
   <div class="zone-row">
     <button class="sub" onclick="change('tapped', -1)">-</button>
-    <div>
-      <div class="small">Tapped</div>
-      <div class="count" id="tapped">0</div>
-    </div>
+    <div><div class="small">Tapped</div><div class="count" id="tapped">0</div></div>
     <button class="add" onclick="change('tapped', 1)">+</button>
   </div>
 
@@ -77,14 +67,8 @@
   <button class="alt" onclick="nextTurn()">Next Turn</button>
   <br><br>
   <button class="sub" onclick="boardWipe()">Board Wipe</button>
-  <br><br>
-  <label>
-    <input type="checkbox" id="enterTapped"> Creatures enter tapped
-  </label>
 </div>
 
-<!-- Ultimate overlay -->
-<div id="ultOverlay"></div>
 <!-- TOGGLES -->
 <div class="card toggles">
   <h2>Game Toggles</h2>
@@ -109,28 +93,25 @@
     <span>Static Exile (grave can't go up)</span>
   </label>
 </div>
-<!-- Link to JS -->
+
+<!-- ULT OVERLAY -->
+<div id="ultOverlay"></div>
+
 <script src="app.js"></script>
-  <script>
-  // Update total bugs dynamically
-  function updateTotalBugs() {
-    const ready = parseInt(document.getElementById('ready').innerText) || 0;
-    const sick = parseInt(document.getElementById('sick').innerText) || 0;
-    const tapped = parseInt(document.getElementById('tapped').innerText) || 0;
-    document.getElementById('totalBugs').innerHTML = ready + sick + tapped;
-  }
 
-  // Observe changes on the zone divs
-  const zoneIds = ['ready', 'sick', 'tapped'];
-  zoneIds.forEach(id => {
-    const el = document.getElementById(id);
-    // Every time the innerText changes, update Total Bugs
-    const observer = new MutationObserver(updateTotalBugs);
-    observer.observe(el, { childList: true, characterData: true, subtree: true });
-  });
-
-  // Initialize on page load
-  updateTotalBugs();
+<script>
+function updateTotalBugs() {
+  const r = parseInt(ready.innerText)||0;
+  const s = parseInt(sick.innerText)||0;
+  const t = parseInt(tapped.innerText)||0;
+  totalBugs.innerText = r+s+t;
+}
+['ready','sick','tapped'].forEach(id=>{
+  new MutationObserver(updateTotalBugs)
+  .observe(document.getElementById(id),{childList:true,subtree:true});
+});
+updateTotalBugs();
 </script>
+
 </body>
 </html>
