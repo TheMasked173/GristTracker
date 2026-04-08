@@ -70,30 +70,37 @@
 </div>
 
 <!-- TOGGLES -->
-<div class="card toggles">
-  <h2>Game Toggles</h2>
-
-  <label class="toggle-row">
-    <input type="checkbox" id="enterTapped">
-    <span>Creatures Enter Tapped</span>
-  </label>
-
-  <label class="toggle-row">
-    <input type="checkbox" id="hasteToggle">
-    <span>Haste</span>
-  </label>
-
-  <label class="toggle-row">
-    <input type="checkbox" id="staticWipe">
-    <span>Static Board Wipe</span>
-  </label>
-
-  <label class="toggle-row">
-    <input type="checkbox" id="staticExile">
-    <span>Static Exile</span>
-  </label>
+<div class="card">
+  <h2>Toggles</h2>
+  <div class="toggle">
+    <label class="switch">
+      <input type="checkbox" id="enterTapped">
+      <span class="slider"></span>
+    </label>
+    Enters Tapped
+  </div>
+  <div class="toggle">
+    <label class="switch">
+      <input type="checkbox" id="hasteToggle">
+      <span class="slider"></span>
+    </label>
+    Haste
+  </div>
+  <div class="toggle">
+    <label class="switch">
+      <input type="checkbox" id="staticWipe">
+      <span class="slider"></span>
+    </label>
+    Static Board Wipe
+  </div>
+  <div class="toggle">
+    <label class="switch">
+      <input type="checkbox" id="staticExile">
+      <span class="slider"></span>
+    </label>
+    Static Exile
+  </div>
 </div>
-
 <!-- ULT OVERLAY -->
 <div id="ultOverlay"></div>
 
