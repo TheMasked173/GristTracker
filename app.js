@@ -106,3 +106,11 @@ function boardWipe(){
   set('sick',0);
   set('tapped',0);
 }
+document.getElementById('staticWipe').addEventListener('change', function () {
+  if (this.checked) {
+    // Immediately wipe all insects
+    set('ready', 0);
+    set('sick', 0);
+    set('tapped', 0);
+  }
+});
