@@ -39,26 +39,22 @@ function gristPlus() {
     }
     count++;
 
-    // Handle insects incrementing
+    // Animate insects
     if (!staticWipe) {
       if (enterTapped) set('tapped', get('tapped') + 1);
       else if (haste) set('ready', get('ready') + 1);
       else set('sick', get('sick') + 1);
     }
 
-    // Increment loyalty each step
+    // Increment loyalty
     change('loyalty', 1);
 
-    // Increment grave proportionally
-    if (!staticExile && n > 1) {
-      // total grave increase = n - 1
-      // increment by fractional amount per step
-      let graveIncrement = (n - 1) / n;
-      let current = parseFloat(document.getElementById('grave').innerText);
-      document.getElementById('grave').innerText = (current + graveIncrement).toFixed(2);
+    // Increment grave only for first n-1 steps
+    if (!staticExile && count <= n - 1) {
+      change('grave', 1);
     }
 
-  }, 200); // 200ms per step
+  }, 200); // 200ms per step for animation
 }
 
 function customGristSub(){
