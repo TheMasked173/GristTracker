@@ -1,45 +1,73 @@
+/* ============================= */
+/*       GLOBAL STYLES           */
+/* ============================= */
 body {
   font-family: 'Arial', sans-serif;
   background: linear-gradient(135deg, #0b0b0b, #1a1a1a);
   color: #e0e0e0;
   text-align: center;
   margin: 0;
-  padding: 0;
+  padding: 20px;
 }
+
 h1 {
-  margin-top: 20px;
-  font-size: 2.5em;
+  font-size: 3em;
+  margin-bottom: 20px;
+  color: #a3c94e;
+  text-shadow: 2px 2px 5px #000;
+}
+
+/* ============================= */
+/*         CARD STYLES           */
+/* ============================= */
+.card {
+  background: linear-gradient(145deg, #1f1f1f, #2a2a2a);
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 450px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  border: 2px solid #4a7c38;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(163,201,78,0.7);
+}
+
+.card h2 {
+  font-size: 1.8em;
+  margin-bottom: 15px;
   color: #a3c94e;
   text-shadow: 1px 1px 3px black;
 }
 
-.card {
-  background: linear-gradient(145deg, #1f1f1f, #2a2a2a);
-  margin: 15px auto;
-  padding: 20px;
-  border-radius: 20px;
-  max-width: 400px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.7);
-  border: 2px solid #4a7c38;
-}
-
+/* ============================= */
+/*         COUNTERS              */
+/* ============================= */
 .count {
-  font-size: 48px;
+  font-size: 50px;
   margin: 10px 0;
   font-weight: bold;
   color: #a3c94e;
   text-shadow: 1px 1px 2px black;
 }
 
+/* Small labels */
 .small {
   font-size: 18px;
   margin-top: 5px;
+  color: #ccc;
 }
 
+/* ============================= */
+/*          BUTTONS              */
+/* ============================= */
 button {
   font-size: 16px;
   margin: 5px;
-  padding: 10px 15px;
+  padding: 10px 18px;
   border-radius: 12px;
   border: none;
   cursor: pointer;
@@ -49,101 +77,65 @@ button {
 
 button:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(163,201,78,0.7);
 }
 
+/* Button types */
 .add { background: #4caf50; color: white; }
 .sub { background: #f44336; color: white; }
 .alt { background: #2196f3; color: white; }
 .reset { background: #888; color: white; }
 
-input[type=checkbox] {
-  transform: scale(1.3);
-  margin-right: 8px;
-}
-
-/* Flex layout for zones */
+/* ============================= */
+/*      ZONE LAYOUT              */
+/* ============================= */
 .zone-row {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 10px 0;
 }
+
 .zone-row button {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   font-size: 24px;
 }
+
 .zone-row div {
   margin: 0 15px;
   text-align: center;
 }
-/* TOGGLES CARD SPECIAL STYLE */
-.card.toggles {
-  border: 2px solid #9c27b0;
-  box-shadow: 0 0 15px rgba(156, 39, 176, 0.5);
+
+/* ============================= */
+/*        CHECKBOXES / TOGGLES   */
+/* ============================= */
+input[type=checkbox] {
+  transform: scale(1.4);
+  margin-right: 10px;
+  cursor: pointer;
 }
 
-/* Toggle rows */
 .toggle-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin: 10px 0;
-  padding: 8px 12px;
-  border-radius: 10px;
-  background: rgba(0,0,0,0.3);
-}
-.toggle-row:hover {
-  background: rgba(255,255,255,0.05);
-}
-/* Custom switch style */
-.toggle-row input[type=checkbox] {
-  appearance: none;
-  width: 50px;
-  height: 25px;
-  background: #555;
-  border-radius: 15px;
-  position: relative;
-  cursor: pointer;
-  outline: none;
-  transition: 0.3s;
 }
 
-/* Toggle ON state */
-.toggle-row input[type=checkbox]:checked {
-  background: #4caf50;
-  box-shadow: 0 0 8px #4caf50;
+.toggle-row label {
+  font-size: 18px;
+  color: #e0e0e0;
 }
 
-/* Toggle slider */
-.toggle-row input[type=checkbox]::after {
-  content: '';
-  width: 23px;
-  height: 23px;
-  background: white;
-  border-radius: 50%;
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  transition: 0.3s;
-}
-
-/* Move slider when ON */
-.toggle-row input[type=checkbox]:checked::after {
-  left: 26px;
-}
-
-/* Toggle label text */
-.toggle-row span {
-  font-size: 16px;
-}
-
-/* Ultimate overlay */
+/* ============================= */
+/*       ULTIMATE OVERLAY        */
+/* ============================= */
 #ultOverlay {
   display: none;
   position: fixed;
   top:0; left:0;
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   background: rgba(0,0,0,0.95);
   color: #a3c94e;
   font-size: 48px;
@@ -157,4 +149,21 @@ input[type=checkbox] {
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}
+}
+
+/* ============================= */
+/*      RESPONSIVE MOBILE        */
+/* ============================= */
+@media (max-width: 480px) {
+  .card {
+    padding: 15px;
+    max-width: 90%;
+  }
+  .count {
+    font-size: 36px;
+  }
+  button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
 }
