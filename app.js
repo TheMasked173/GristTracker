@@ -1,4 +1,3 @@
-// -------------------- GENERIC --------------------
 function get(id){return parseInt(document.getElementById(id).innerText);}
 function set(id,val){document.getElementById(id).innerText=Math.max(val,0);}
 function animateCount(id){
@@ -8,7 +7,7 @@ function animateCount(id){
   el.classList.add('pop');
 }
 
-// Global change function (handles static board wipe)
+// -------------------- GLOBAL CHANGE --------------------
 function change(id, amt) {
   const staticWipe = document.getElementById('staticWipe').checked;
   if (staticWipe && ['ready','sick','tapped'].includes(id)) return;
