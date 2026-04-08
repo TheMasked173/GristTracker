@@ -16,7 +16,7 @@ function change(id, amt) {
   if (start === end) return;
 
   const step = amt > 0 ? 1 : -1;
-  const interval = 50; // ms per increment
+  const interval = 100; // ms per increment, slower
 
   el.classList.add(amt > 0 ? 'increase' : 'decrease');
 
@@ -45,11 +45,11 @@ function gristPlus(){
 
   if(!staticWipe){
     if(enterTapped){
-      set('tapped', get('tapped') + n);
+      change('tapped', n);
     } else if(haste){
-      set('ready', get('ready') + n);
+      change('ready', n);
     } else {
-      set('sick', get('sick') + n);
+      change('sick', n);
     }
   }
 
@@ -77,7 +77,7 @@ function gristUlt(){
   setTimeout(()=> o.style.display="none", 3000);
 }
 
-function resetGrist(){ set('loyalty',3); }
+function resetGrist(){ change('loyalty', 3 - get('loyalty')); }
 function newGame(){
   ['loyalty','grave','ready','sick','tapped'].forEach((id,i)=>{ set(id, i===0?3:0); });
 }
