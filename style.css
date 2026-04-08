@@ -1,4 +1,3 @@
-/* ===== BODY & GLOBAL ===== */
 body {
   font-family: 'Arial', sans-serif;
   background: linear-gradient(135deg, #0b0b0b, #1a1a1a);
@@ -7,6 +6,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 h1 {
   margin-top: 20px;
   font-size: 2.5em;
@@ -14,7 +14,6 @@ h1 {
   text-shadow: 1px 1px 3px black;
 }
 
-/* ===== CARD ===== */
 .card {
   background: linear-gradient(145deg, #1f1f1f, #2a2a2a);
   margin: 15px auto;
@@ -25,13 +24,23 @@ h1 {
   border: 2px solid #4a7c38;
 }
 
-/* ===== COUNTS ===== */
 .count {
   font-size: 48px;
   margin: 10px 0;
   font-weight: bold;
   color: #a3c94e;
   text-shadow: 1px 1px 2px black;
+  transition: color 0.2s;
+}
+
+.count.pop {
+  animation: pop 0.5s ease forwards;
+}
+
+@keyframes pop {
+  0%   { transform: scale(1); color: #a3c94e; }
+  50%  { transform: scale(1.4); color: #ffff66; }
+  100% { transform: scale(1); color: #a3c94e; }
 }
 
 .small {
@@ -39,7 +48,6 @@ h1 {
   margin-top: 5px;
 }
 
-/* ===== BUTTONS ===== */
 button {
   font-size: 16px;
   margin: 5px;
@@ -60,7 +68,7 @@ button:hover {
 .alt { background: #2196f3; color: white; }
 .reset { background: #888; color: white; }
 
-/* ===== FLEX LAYOUT FOR ZONES ===== */
+/* Flex layout for zones */
 .zone-row {
   display: flex;
   justify-content: center;
@@ -77,7 +85,45 @@ button:hover {
   text-align: center;
 }
 
-/* ===== ULTIMATE OVERLAY ===== */
+/* Toggle Switch Styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin: 5px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #888;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px; width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #4caf50;
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Ultimate overlay */
 #ultOverlay {
   display: none;
   position: fixed;
@@ -92,64 +138,8 @@ button:hover {
   text-shadow: 2px 2px 5px black;
   animation: fadeIn 0.5s;
 }
+
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}
-}
-
-/* ===== TOGGLE SWITCH ===== */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 28px;
-  margin-right: 10px;
-}
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #555;
-  border-radius: 28px;
-  transition: 0.4s;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-}
-.slider::before {
-  position: absolute;
-  content: "";
-  height: 22px;
-  width: 22px;
-  left: 3px;
-  bottom: 3px;
-  background-color: #e0e0e0;
-  border-radius: 50%;
-  transition: 0.4s;
-}
-.switch input:checked + .slider {
-  background-color: #4caf50;
-}
-.switch input:checked + .slider::before {
-  transform: translateX(22px);
-}
-
-/* ===== TOGGLE LABEL ===== */
-.toggle {
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
-  font-size: 18px;
-  color: #e0e0e0;
-  justify-content: flex-start;
-}
-
-/* ===== OPTIONAL: TOTAL BUGS & GRIST HIGHLIGHT ===== */
-.count#totalBugs, .count#loyalty {
-  transition: all 0.3s ease-in-out;
-  color: #a3c94e;
-  text-shadow: 1px 1px 4px black;
 }
