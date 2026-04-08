@@ -30,16 +30,17 @@ h1 {
   font-weight: bold;
   color: #a3c94e;
   text-shadow: 1px 1px 2px black;
-  transition: color 0.2s;
+  transition: color 0.2s, transform 0.2s;
 }
 
+/* Pop animation for increments */
 .count.pop {
-  animation: pop 0.5s ease forwards;
+  animation: popRed 0.6s ease forwards;
 }
 
-@keyframes pop {
+@keyframes popRed {
   0%   { transform: scale(1); color: #a3c94e; }
-  50%  { transform: scale(1.4); color: #ffff66; }
+  50%  { transform: scale(1.5); color: #ff3333; }
   100% { transform: scale(1); color: #a3c94e; }
 }
 
