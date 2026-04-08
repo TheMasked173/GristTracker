@@ -23,7 +23,7 @@ function change(id, amt) {
 
 // -------------------- GRIST --------------------
 function gristPlus(){
-  let n=parseInt(prompt("How many times resolve +1?"));
+  let n = parseInt(prompt("How many times resolve +1?"));
   if(isNaN(n)||n<1) return;
 
   const enterTapped = document.getElementById('enterTapped').checked;
@@ -31,15 +31,22 @@ function gristPlus(){
   const staticWipe = document.getElementById('staticWipe').checked;
   const staticExile = document.getElementById('staticExile').checked;
 
-  if(!staticWipe){
-    if(enterTapped) set('tapped', get('tapped')+n);
-    else if(haste) set('ready', get('ready')+n);
-    else set('sick', get('sick')+n);
-  }
+  // Animate the bulk increment step by step
+  let count = 0;
+  const interval = setInterval(()=>{
+    if(count >= n){ clearInterval(interval); return; }
+    count++;
 
-  change('loyalty', n);
+    if(!staticWipe){
+      if(enterTapped) set('tapped', get('tapped')+1);
+      else if(haste) set('ready', get('ready')+1);
+      else set('sick', get('sick')+1);
+    }
 
-  if(!staticExile) change('grave', n-1);
+    change('loyalty', 1);
+    if(!staticExile) change('grave', 1);
+
+  }, 200); // 200ms between each increment
 }
 
 function customGristSub(){
