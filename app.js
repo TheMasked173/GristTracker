@@ -2,16 +2,19 @@ function get(id){return parseInt(document.getElementById(id).innerText);}
 function set(id,val){document.getElementById(id).innerText=Math.max(val,0);}
 
 // GLOBAL CHANGE (handles static wipe)
-function change(id, amt){
+function change(id, amt) {
+  // Block changes to bugs if Static Board Wipe is ON
   const staticWipe = document.getElementById('staticWipe').checked;
+  if (staticWipe && ['ready','sick','tapped'].includes(id)) return;
 
-  if(staticWipe && (id==='ready'||id==='sick'||id==='tapped')) return;
+  let el = document.getElementById(id);
+  let val = parseInt(el.innerText) + amt;
+  if (val < 0) val = 0;
+  el.innerText = val;
 
-  let val = get(id)+amt;
-  if(val<0) val=0;
-  set(id,val);
+  // Update Total Bugs dynamically
+  if (['ready','sick','tapped'].includes(id)) updateTotalBugs();
 }
-
 // GRIST
 function gristPlus(){
   let n = parseInt(prompt("How many times resolve +1?"));
@@ -108,9 +111,9 @@ function boardWipe(){
 }
 document.getElementById('staticWipe').addEventListener('change', function () {
   if (this.checked) {
-    // Immediately wipe all insects
     set('ready', 0);
     set('sick', 0);
     set('tapped', 0);
+    updateTotalBugs();
   }
 });
