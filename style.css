@@ -1,4 +1,103 @@
-/* Toggle Switch Container */
+/* ===== BODY & GLOBAL ===== */
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #0b0b0b, #1a1a1a);
+  color: #e0e0e0;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  margin-top: 20px;
+  font-size: 2.5em;
+  color: #a3c94e;
+  text-shadow: 1px 1px 3px black;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: linear-gradient(145deg, #1f1f1f, #2a2a2a);
+  margin: 15px auto;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 400px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+  border: 2px solid #4a7c38;
+}
+
+/* ===== COUNTS ===== */
+.count {
+  font-size: 48px;
+  margin: 10px 0;
+  font-weight: bold;
+  color: #a3c94e;
+  text-shadow: 1px 1px 2px black;
+}
+
+.small {
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+/* ===== BUTTONS ===== */
+button {
+  font-size: 16px;
+  margin: 5px;
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.add { background: #4caf50; color: white; }
+.sub { background: #f44336; color: white; }
+.alt { background: #2196f3; color: white; }
+.reset { background: #888; color: white; }
+
+/* ===== FLEX LAYOUT FOR ZONES ===== */
+.zone-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+.zone-row button {
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+}
+.zone-row div {
+  margin: 0 15px;
+  text-align: center;
+}
+
+/* ===== ULTIMATE OVERLAY ===== */
+#ultOverlay {
+  display: none;
+  position: fixed;
+  top:0; left:0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.95);
+  color: #a3c94e;
+  font-size: 48px;
+  text-align: center;
+  padding-top: 20%;
+  z-index: 9999;
+  text-shadow: 2px 2px 5px black;
+  animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* ===== TOGGLE SWITCH ===== */
 .switch {
   position: relative;
   display: inline-block;
@@ -6,25 +105,20 @@
   height: 28px;
   margin-right: 10px;
 }
-
-/* Hide default checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #ccc;
+  background-color: #555;
   border-radius: 28px;
   transition: 0.4s;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
 }
-
-/* The circle inside slider */
 .slider::before {
   position: absolute;
   content: "";
@@ -32,25 +126,30 @@
   width: 22px;
   left: 3px;
   bottom: 3px;
-  background-color: white;
+  background-color: #e0e0e0;
   border-radius: 50%;
   transition: 0.4s;
 }
-
-/* Checked state */
 .switch input:checked + .slider {
   background-color: #4caf50;
 }
-
 .switch input:checked + .slider::before {
   transform: translateX(22px);
 }
 
-/* Optional label styling */
+/* ===== TOGGLE LABEL ===== */
 .toggle {
   display: flex;
   align-items: center;
   margin: 10px 0;
   font-size: 18px;
   color: #e0e0e0;
+  justify-content: flex-start;
+}
+
+/* ===== OPTIONAL: TOTAL BUGS & GRIST HIGHLIGHT ===== */
+.count#totalBugs, .count#loyalty {
+  transition: all 0.3s ease-in-out;
+  color: #a3c94e;
+  text-shadow: 1px 1px 4px black;
 }
