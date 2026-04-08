@@ -1,36 +1,39 @@
-// -------------------
-// UTILITY FUNCTIONS
-// -------------------
+// ---------------------------
+// HELPER FUNCTIONS
+// ---------------------------
 function get(id){ return parseInt(document.getElementById(id).innerText) || 0; }
 function set(id,val){ document.getElementById(id).innerText = Math.max(val,0); }
 
-// -------------------
-// TOTAL BUGS UPDATE
-// -------------------
-function updateTotalBugs() {
-  const ready = get('ready');
-  const sick = get('sick');
-  const tapped = get('tapped');
-  set('totalBugs', ready + sick + tapped);
-}
-
-// -------------------
-// GLOBAL CHANGE FUNCTION (blocks changes if static board wipe is ON)
-// -------------------
+// Animated change function for counters
 function change(id, amt) {
   const staticWipe = document.getElementById('staticWipe').checked;
   if (staticWipe && ['ready','sick','tapped'].includes(id)) return;
 
   let el = document.getElementById(id);
-  let val = get(id) + amt;
-  set(id, val);
+  let start = get(id);
+  let end = Math.max(start + amt, 0);
 
-  if (['ready','sick','tapped'].includes(id)) updateTotalBugs();
+  if (start === end) return;
+
+  const step = amt > 0 ? 1 : -1;
+  const interval = 50; // ms per increment
+
+  el.classList.add(amt > 0 ? 'increase' : 'decrease');
+
+  const timer = setInterval(() => {
+    start += step;
+    el.innerText = start;
+    if (['ready','sick','tapped'].includes(id)) updateTotalBugs();
+    if ((step > 0 && start >= end) || (step < 0 && start <= end)) {
+      clearInterval(timer);
+      el.classList.remove('increase', 'decrease');
+    }
+  }, interval);
 }
 
-// -------------------
+// ---------------------------
 // GRIST FUNCTIONS
-// -------------------
+// ---------------------------
 function gristPlus(){
   let n = parseInt(prompt("How many times resolve +1?"));
   if(isNaN(n)||n<1) return;
@@ -48,7 +51,6 @@ function gristPlus(){
     } else {
       set('sick', get('sick') + n);
     }
-    updateTotalBugs();
   }
 
   change('loyalty', n);
@@ -59,76 +61,68 @@ function gristPlus(){
 }
 
 function customGristSub(){
-  let n = parseInt(prompt("Reduce Grist Loyalty by how much?"));
+  let n = parseInt(prompt("Reduce loyalty by how much?"));
   if(isNaN(n)||n<1) return;
   change('loyalty', -n);
 }
 
 function gristUlt(){
-  if(get('loyalty')<5){alert("Not enough loyalty!"); return;}
+  if(get('loyalty') < 5){ alert("Not enough loyalty!"); return; }
   change('loyalty', -5);
 
-  let g = get('grave');
-  let overlay = document.getElementById('ultOverlay');
-  overlay.innerHTML = `<div>GRIST ULTIMATE!<br>${g} creatures consumed!</div>`;
-  overlay.style.display = "block";
-  setTimeout(()=>overlay.style.display="none",3000);
+  const g = get('grave');
+  const o = document.getElementById('ultOverlay');
+  o.innerHTML = `<div>GRIST ULTIMATE!<br>${g} creatures consumed!</div>`;
+  o.style.display = "block";
+  setTimeout(()=> o.style.display="none", 3000);
 }
 
-function resetGrist(){ set('loyalty', 3); }
-
+function resetGrist(){ set('loyalty',3); }
 function newGame(){
-  set('loyalty',3);
-  set('grave',0);
-  set('ready',0);
-  set('sick',0);
-  set('tapped',0);
-  updateTotalBugs();
+  ['loyalty','grave','ready','sick','tapped'].forEach((id,i)=>{ set(id, i===0?3:0); });
 }
 
-// -------------------
+// ---------------------------
 // GRAVEYARD FUNCTIONS
-// -------------------
+// ---------------------------
 function addGrave(){
   if(document.getElementById('staticExile').checked) return;
   change('grave',1);
 }
 function addGravePrompt(){
   if(document.getElementById('staticExile').checked) return;
-  let n = parseInt(prompt("Add how many?"));
+  let n = parseInt(prompt("Add how many creatures to graveyard?"));
   if(isNaN(n)||n<1) return;
   change('grave', n);
 }
 function removeGrave(){ change('grave', -1); }
 function removeGravePrompt(){
-  let n = parseInt(prompt("Remove how many?"));
+  let n = parseInt(prompt("Remove how many creatures?"));
   if(isNaN(n)||n<1) return;
   change('grave', -n);
 }
 function exileGrave(){ set('grave',0); }
 
-// -------------------
-// INSECT FUNCTIONS
-// -------------------
+// ---------------------------
+// INSECTS FUNCTIONS
+// ---------------------------
 function tapReady(){
   if(get('ready')>0){
-    set('ready', get('ready')-1);
-    set('tapped', get('tapped')+1);
-    updateTotalBugs();
+    change('ready', -1);
+    change('tapped', 1);
   }
 }
 function untapOne(){
   if(get('tapped')>0){
-    set('tapped', get('tapped')-1);
-    set('ready', get('ready')+1);
-    updateTotalBugs();
+    change('tapped', -1);
+    change('ready', 1);
   }
 }
 function nextTurn(){
-  let total = get('ready') + get('sick') + get('tapped');
+  const total = get('ready') + get('sick') + get('tapped');
   set('ready', total);
-  set('tapped',0);
   set('sick',0);
+  set('tapped',0);
   updateTotalBugs();
 }
 function boardWipe(){
@@ -138,19 +132,22 @@ function boardWipe(){
   updateTotalBugs();
 }
 
-// -------------------
-// TOGGLE EVENT LISTENERS
-// -------------------
-document.addEventListener('DOMContentLoaded', function() {
-  // Static Board Wipe: zero all bugs immediately when toggled ON
-  document.getElementById('staticWipe').addEventListener('change', function(){
-    if(this.checked){
-      set('ready',0);
-      set('sick',0);
-      set('tapped',0);
-      updateTotalBugs();
-    }
-  });
+// ---------------------------
+// TOTAL BUGS COUNTER
+// ---------------------------
+function updateTotalBugs(){
+  const total = get('ready') + get('sick') + get('tapped');
+  set('totalBugs', total);
+}
 
-  // Optionally: you could add more listeners here for other toggles if needed
+// ---------------------------
+// STATIC WIPE TOGGLE: ZERO BUGS ON ENABLE
+// ---------------------------
+document.getElementById('staticWipe').addEventListener('change', function () {
+  if(this.checked){
+    set('ready',0);
+    set('sick',0);
+    set('tapped',0);
+    updateTotalBugs();
+  }
 });
