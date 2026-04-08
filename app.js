@@ -69,7 +69,7 @@ function gristUlt(){
 
   let g=get('grave');
   let o=document.getElementById('ultOverlay');
-  o.innerHTML=`<div>GRIST ULTIMATE!<br>${g} creatures consumed!</div>`;
+  o.innerHTML=`<div>Ultimate unleashed <br> ${grave} damage rains down!</div>`;
   o.style.display="block";
   setTimeout(()=>o.style.display="none",3000);
 }
