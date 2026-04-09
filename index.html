@@ -6,7 +6,14 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+<!-- Grist action lock overlay -->
+<div id="actionOverlay" style="display:none;">
+  <div>
+    <p>You've already used a grist ability this turn!</p>
+    <button class="add" onclick="confirmNewTurn()">New Turn</button>
+    <button class="sub" onclick="cancelActionOverlay()">Cancel</button>
+  </div>
+</div>
 <h1>Grist Tracker</h1>
 
 <!-- GRIST -->
