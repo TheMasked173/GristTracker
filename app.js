@@ -25,34 +25,40 @@ function change(id, amt) {
 }
 
 // -------------------- GRIST --------------------
-function gristPlus(){
-  checkGristLock(() => {
-    let n = parseInt(prompt("INFESTATION COUNT?"));
-    if(isNaN(n)||n<1) return;
+function gristPlus() {
+  if(gristUsedThisTurn){
+    showGristPopup();
+    return;
+  }
 
-    const enterTapped = document.getElementById('enterTapped').checked;
-    const haste = document.getElementById('hasteToggle').checked;
-    const staticWipe = document.getElementById('staticWipe').checked;
-    const staticExile = document.getElementById('staticExile').checked;
+  let n = parseInt(prompt("INFESTATION COUNT?"));
+  if (isNaN(n) || n < 1) return;
 
-    let count = 0;
-    const interval = setInterval(() => {
-      if(count >= n){ clearInterval(interval); return; }
-      count++;
+  const enterTapped = document.getElementById('enterTapped').checked;
+  const haste = document.getElementById('hasteToggle').checked;
+  const staticWipe = document.getElementById('staticWipe').checked;
+  const staticExile = document.getElementById('staticExile').checked;
 
-      if(!staticWipe){
-        if(enterTapped) set('tapped', get('tapped') + 1);
-        else if(haste) set('ready', get('ready') + 1);
-        else set('sick', get('sick') + 1);
-      }
+  let count = 0;
+  const interval = setInterval(() => {
+    if (count >= n) {
+      clearInterval(interval);
+      gristUsedThisTurn = true;
+      return;
+    }
+    count++;
 
-      change('loyalty', 1);
+    if (!staticWipe){
+      if (enterTapped) set('tapped', get('tapped') + 1);
+      else if (haste) set('ready', get('ready') + 1);
+      else set('sick', get('sick') + 1);
+    }
 
-      if(!staticExile && count <= n - 1){
-        change('grave', 1);
-      }
-    }, 200);
-  });
+    change('loyalty', 1);
+
+    if(!staticExile && count <= n - 1) change('grave', 1);
+
+  }, 200);
 }
 
 function customGristSub(){
