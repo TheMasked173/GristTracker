@@ -31,7 +31,7 @@ function gristPlus() {
     return;
   }
 
-  let n = parseInt(prompt("How many times resolve +1?"));
+  let n = parseInt(prompt("INFESTATION COUNT?"));
   if (isNaN(n) || n < 1) return;
 
   const enterTapped = document.getElementById('enterTapped').checked;
