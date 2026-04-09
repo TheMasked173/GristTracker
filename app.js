@@ -1,3 +1,6 @@
+// -------------------- GLOBAL --------------------
+let gristUsedThisTurn = false;
+
 function get(id){return parseInt(document.getElementById(id).innerText);}
 function set(id,val){document.getElementById(id).innerText=Math.max(val,0);}
 function animateCount(id){
@@ -23,6 +26,11 @@ function change(id, amt) {
 
 // -------------------- GRIST --------------------
 function gristPlus() {
+  if(gristUsedThisTurn){
+    showGristPopup();
+    return;
+  }
+
   let n = parseInt(prompt("How many times resolve +1?"));
   if (isNaN(n) || n < 1) return;
 
@@ -35,48 +43,59 @@ function gristPlus() {
   const interval = setInterval(() => {
     if (count >= n) {
       clearInterval(interval);
+      gristUsedThisTurn = true;
       return;
     }
     count++;
 
-    // Animate insects
-    if (!staticWipe) {
+    if (!staticWipe){
       if (enterTapped) set('tapped', get('tapped') + 1);
       else if (haste) set('ready', get('ready') + 1);
       else set('sick', get('sick') + 1);
     }
 
-    // Increment loyalty
     change('loyalty', 1);
 
-    // Increment grave only for first n-1 steps
-    if (!staticExile && count <= n - 1) {
-      change('grave', 1);
-    }
+    if(!staticExile && count <= n - 1) change('grave', 1);
 
-  }, 200); // 200ms per step for animation
+  }, 200);
 }
 
 function customGristSub(){
-  let n=parseInt(prompt("Reduce by how much?"));
-  if(isNaN(n)||n<1) return;
+  if(gristUsedThisTurn){
+    showGristPopup();
+    return;
+  }
+
+  let n = parseInt(prompt("Reduce by how much?"));
+  if(isNaN(n) || n < 1) return;
   change('loyalty', -n);
+  gristUsedThisTurn = true;
 }
 
 function gristUlt(){
+  if(gristUsedThisTurn){
+    showGristPopup();
+    return;
+  }
+
   if(get('loyalty')<5){alert("Not enough loyalty!"); return;}
   change('loyalty', -5);
 
-  let g=get('grave');
-  let o=document.getElementById('ultOverlay');
-  o.innerHTML=`<div>Ultimate unleashed <br> ${g} damage rains down!</div>`;
-  o.style.display="block";
+  let g = get('grave');
+  let o = document.getElementById('ultOverlay');
+  o.innerHTML = `<div>Ultimate unleashed <br>${g} damage rains down!</div>`;
+  o.style.display = "block";
   setTimeout(()=>o.style.display="none",3000);
+
+  gristUsedThisTurn = true;
 }
 
+// -------------------- RESET / NEW GAME --------------------
 function resetGrist(){ set('loyalty',3); }
 function newGame(){
   ['loyalty','grave','ready','sick','tapped'].forEach((id,i)=>set(id,i===0?3:0));
+  gristUsedThisTurn = false;
 }
 
 // -------------------- GRAVEYARD --------------------
@@ -102,6 +121,7 @@ function nextTurn(){
   let total = get('ready')+get('sick')+get('tapped');
   set('ready', total);
   set('sick',0); set('tapped',0);
+  gristUsedThisTurn = false;
 }
 function boardWipe(){ set('ready',0); set('sick',0); set('tapped',0); }
 
@@ -114,10 +134,33 @@ function updateTotalBugs(){
   animateCount('totalBugs');
 }
 
-// -------------------- STATIC WIPE HANDLER --------------------
+// -------------------- STATIC WIPE --------------------
 document.getElementById('staticWipe').addEventListener('change', function(){
   if(this.checked){
     set('ready',0); set('sick',0); set('tapped',0);
     updateTotalBugs();
   }
 });
+
+// -------------------- GRIST POPUP --------------------
+function showGristPopup(){
+  const overlay = document.getElementById('ultOverlay');
+  overlay.innerHTML = `
+    <div>
+      You’ve already used a Grist ability this turn!
+      <br><br>
+      <button onclick="confirmNewTurn()">New Turn</button>
+      <button onclick="closeOverlay()">Cancel</button>
+    </div>
+  `;
+  overlay.style.display = 'block';
+}
+
+function closeOverlay(){
+  document.getElementById('ultOverlay').style.display = 'none';
+}
+
+function confirmNewTurn(){
+  closeOverlay();
+  nextTurn();
+}
