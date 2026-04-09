@@ -39,25 +39,26 @@
 </div>
 
 <!-- INSECTS -->
+<!-- INSECTS -->
 <div class="card">
   <h2>Insect Zones</h2>
 
   <div class="zone-row">
-    <button class="sub" onclick="change('ready', -1)">-</button>
-    <div><div class="small">Ready</div><div class="count" id="ready">0</div></div>
     <button class="add" onclick="change('ready', 1)">+</button>
+    <div><div class="small">Ready</div><div class="count" id="ready">0</div></div>
+    <button class="sub" onclick="change('ready', -1)">-</button>
   </div>
 
   <div class="zone-row">
-    <button class="sub" onclick="change('sick', -1)">-</button>
-    <div><div class="small">Summoning Sick</div><div class="count" id="sick">0</div></div>
     <button class="add" onclick="change('sick', 1)">+</button>
+    <div><div class="small">Summoning Sick</div><div class="count" id="sick">0</div></div>
+    <button class="sub" onclick="change('sick', -1)">-</button>
   </div>
 
   <div class="zone-row">
-    <button class="sub" onclick="change('tapped', -1)">-</button>
-    <div><div class="small">Tapped</div><div class="count" id="tapped">0</div></div>
     <button class="add" onclick="change('tapped', 1)">+</button>
+    <div><div class="small">Tapped</div><div class="count" id="tapped">0</div></div>
+    <button class="sub" onclick="change('tapped', -1)">-</button>
   </div>
 
   <br>
@@ -69,6 +70,8 @@
   <button class="sub" onclick="boardWipe()">Board Wipe</button>
 </div>
 
+<!-- ULT & GRIST ALERT OVERLAY -->
+<div id="ultOverlay"></div>
 <!-- TOGGLES -->
 <div class="card">
   <h2>Toggles</h2>
