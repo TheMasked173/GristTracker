@@ -43,11 +43,12 @@ function gristPlus() {
   const interval = setInterval(() => {
     if (count >= n) {
       clearInterval(interval);
-      gristUsedThisTurn = true;
+      gristUsedThisTurn = true; // lock after finishing
       return;
     }
     count++;
 
+    // Animate insects
     if (!staticWipe){
       if (enterTapped) set('tapped', get('tapped') + 1);
       else if (haste) set('ready', get('ready') + 1);
@@ -56,30 +57,40 @@ function gristPlus() {
 
     change('loyalty', 1);
 
+    // Increment grave only for first n-1 steps
     if(!staticExile && count <= n - 1) change('grave', 1);
 
   }, 200);
 }
 
-function customGristSub(){
+// -------------------- -2 Grist Ability --------------------
+function gristMinus2() {
   if(gristUsedThisTurn){
     showGristPopup();
     return;
   }
+  change('loyalty', -2);
+  gristUsedThisTurn = true; // lock Grist abilities this turn
+}
 
+// -------------------- Custom - (does NOT lock) --------------------
+function customGristSub(){
   let n = parseInt(prompt("Reduce by how much?"));
   if(isNaN(n) || n < 1) return;
   change('loyalty', -n);
-  gristUsedThisTurn = true;
 }
 
+// -------------------- Ultimate (-5) --------------------
 function gristUlt(){
   if(gristUsedThisTurn){
     showGristPopup();
     return;
   }
 
-  if(get('loyalty')<5){alert("Not enough loyalty!"); return;}
+  if(get('loyalty') < 5){
+    alert("Not enough loyalty!");
+    return;
+  }
   change('loyalty', -5);
 
   let g = get('grave');
@@ -88,7 +99,7 @@ function gristUlt(){
   o.style.display = "block";
   setTimeout(()=>o.style.display="none",3000);
 
-  gristUsedThisTurn = true;
+  gristUsedThisTurn = true; // lock after ultimate
 }
 
 // -------------------- RESET / NEW GAME --------------------
