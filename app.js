@@ -133,7 +133,7 @@ function nextTurn(){
   set('ready', total);
   set('sick',0); set('tapped',0);
   gristUsedThisTurn = false;
-}
+function swingOut(){ set('tapped', get('tapped') + get('ready')); set('ready', 0); }
 function boardWipe(){ set('ready',0); set('sick',0); set('tapped',0); }
 
 // -------------------- TOTAL BUGS --------------------
